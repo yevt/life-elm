@@ -7,9 +7,38 @@
     <title>Vite App</title>
   </head>
   <body>
-    <div id="app">
-      <div></div>
-    </div>
+    <div id="app"></div>
     <script type="module" src="/main.js"></script>
   </body>
 </html>
+
+
+
+<!-- <html>
+<head>
+  <meta charset="UTF-8">
+  <title>Main</title>
+  <script src="life.js"></script>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <div id="myapp"></div>
+  <script>
+  // var app = Elm.Main.embed(document.getElementById('myapp'));
+  
+  var app = Elm.Main.init({
+    node: ddocument.getElementById('myapp'),
+    flags: '<some value>'
+  });
+  
+  setTimeout(function() {
+    var settingsElement = document.getElementById('settings');
+    var ww = document.body.clientWidth;
+    var wh = document.body.clientHeight - settingsElement.clientHeight;
+    app.ports.screenSize.send([ww, wh])
+
+  })
+  </script>
+</body>
+</html> -->

@@ -9,5 +9,12 @@ if (process.env.NODE_ENV === "development") {
     })
 }
 
-const root = document.querySelector("#app div");
-const app = Elm.Main.init({ node: root });
+const root = document.querySelector("#app");
+const app = Elm.Main.init({ node: root, flags: '<some value>' });
+
+setTimeout(function() {
+    var settingsElement = document.getElementById('settings');
+    var ww = document.body.clientWidth;
+    var wh = document.body.clientHeight - settingsElement.clientHeight;
+    app.ports.screenSize.send([ww, wh])
+})

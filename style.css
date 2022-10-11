@@ -1,13 +1,36 @@
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin: 0 auto;
-  margin-top: 60px;
+* {
+  padding: 0;
+  margin: 0;
 }
 
-a {
-  color: #60b5cc;
+html,
+body {
+  height: 100%;
+}
+
+body {
+  background-color: #eeeeee
+}
+
+body,
+#app,
+#app > div {
+  display:flex; 
+  flex-direction:column;
+  height:100%; padding:0; margin:0; width:100%;
+  overflow: hidden;
+}
+
+.world {
+  background-color:chocolate;
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  flex-grow: 1;
+  width: 100%;
+  align-content: baseline;
+}
+
+.settings {
+  background-color: cadetblue;
 }
