@@ -22,7 +22,7 @@ jobs:
           node-version: ${{ matrix.node-version }}
       - name: Set environment
         run: pwd
-        run: PATH="$PATH:./node_modules/.bin"%
+      - run: PATH="$PATH:./node_modules/.bin"%
       - name: Install dependencies
         run: npm ci
       - run: npm run lint
