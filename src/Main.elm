@@ -5,7 +5,6 @@ import Html.Attributes exposing (class, style, value, id)
 import Html.Events exposing (onClick, onInput)
 import Time
 import Browser
-import Debug exposing (toString)
 
 port screenSize : ((Int, Int) -> msg) -> Sub msg
 
@@ -285,8 +284,8 @@ viewCell index value model =
     in
     Html.div [ 
         style "backgroundColor" color,
-        style "width" (toString model.cellWidth ++ "px"),
-        style "height" (toString model.cellHeight ++ "px")
+        style "width" (String.fromInt model.cellWidth ++ "px"),
+        style "height" (String.fromInt model.cellHeight ++ "px")
         -- style
         --     [ ( "backgroundColor", color )
         --     , ( "width", String.fromInt model.cellWidth ++ "px" )
