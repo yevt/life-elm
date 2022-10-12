@@ -1,4 +1,4 @@
-port module Main exposing (..)
+port module Main exposing (Model, Mode, Msg, main)
 
 import Html exposing (Html, button, div, input, text, label)
 import Html.Attributes exposing (class, style, value, id)
@@ -46,59 +46,26 @@ type alias Model =
 -- INITIAL FIELD
 
 
-initialAliveCells : List ( Int, Int )
-initialAliveCells =
-    [ ( 1, 1 ), ( 2, 2 ), ( 1, 2 ) ]
+
+init : String -> ( Model, Cmd Msg )
+init _ =
+    (
+        { mode = Setup
+        , worldWidth = 0 -- cells
+        , worldHeight = 0
+        , cells = []
+        , tick = 0 -- iteration counter
+        , tickDuration = 1000 -- ms
+        , screenWidth = 0 -- px
+        , screenHeight = 0
+        , cellWidth = 25
+        , cellHeight = 25
+        }
+        , Cmd.none
+    )
 
 
-init : flags -> ( Model, Cmd Msg )
-init flags =
-    let
-        worldWidth =
-            0
 
-        worldHeight =
-            0
-    in
-        (
-            { mode = Setup
-            , worldWidth = 0 -- cells
-            , worldHeight = 0
-            , cells = []
-            , tick = 0 -- iteration counter
-            , tickDuration = 1000 -- ms
-            , screenWidth = 0 -- px
-            , screenHeight = 0
-            , cellWidth = 25
-            , cellHeight = 25
-            }
-            , Cmd.none
-        )
-
-
-cellsFieldFromList : Int -> Int -> List ( Int, Int ) -> List Int
-cellsFieldFromList w h coordsList =
-    let
-        cells =
-            List.repeat (w * h) 0
-
-        createCell index _ =
-            let
-                x =
-                    remainderBy w index
-
-                y =
-                    index // w
-
-                inCoordList ( xx, yy ) =
-                    xx == x && yy == y
-            in
-            if List.any inCoordList coordsList then
-                1
-            else
-                0
-    in
-    List.indexedMap createCell cells
 
 
 
@@ -108,8 +75,6 @@ cellsFieldFromList w h coordsList =
 type Msg
     = StartSimulation
     | Tick Time.Posix
-    | SetFieldWidth Int
-    | SetFieldHeight Int
     | SetTickDuration String
     | ToggleCell Int
     | ScreenSize (Int, Int)
@@ -118,6 +83,7 @@ type Msg
 evolve : Int -> Int -> List Int -> List Int
 evolve width height cells =
     let
+        indexedCells : List {x : Int, y : Int, content : Int}
         indexedCells =
             List.indexedMap
                 (\index cell ->
@@ -190,21 +156,7 @@ update msg model =
             , Cmd.none
             )
 
-        SetFieldWidth width ->
-            ( { model
-                | worldWidth = width
-                , cells = cellsFieldFromList width model.worldHeight initialAliveCells
-              }
-            , Cmd.none
-            )
 
-        SetFieldHeight height ->
-            ( { model
-                | worldHeight = height
-                , cells = cellsFieldFromList model.worldWidth height initialAliveCells
-              }
-            , Cmd.none
-            )
 
         ToggleCell index ->
             ( { model | cells = List.indexedMap (\i v -> 
